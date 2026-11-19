@@ -57,9 +57,9 @@ jobs:
             --configuration=release_arm64 \
             --buildNumber="${GITHUB_RUN_NUMBER}"
           mkdir -p /Users/Shared/out
-          for f in bazel-out/applebin_ios-ios_arm*-opt-ST-*/bin/Telegram/Telegram.ipa; do
-            cp "$f" /Users/Shared/out/ArcherGram.ipa
-          done
+          IPA=$(ls bazel-bin/Telegram/Telegram.ipa bazel-out/*/bin/Telegram/Telegram.ipa 2>/dev/null | head -1)
+          echo "IPA: $IPA"
+          cp -L "$IPA" /Users/Shared/out/ArcherGram.ipa
           ls -la /Users/Shared/out
 
       - name: Upload the IPA
